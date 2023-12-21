@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Thiết lập các tham số -->
+    <arg name="model" value="burger" doc="model type [burger, waffle, waffle_pi]"/>
+    <arg name="configuration_basename" default="turtlebot3_lds_2d.lua"/>
+    <arg name="map_file" default="$(find clean_robot)/maps/clean_room.yaml"/>
+    <arg name="open_rviz" default="true"/>
+
+    <!-- Khởi chạy môi trường mô phỏng -->
+    <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+        <arg name="model" value="$(arg model)" />
+    </include>
+    <include file="$(find clean_robot)/launch/gazebo.launch"/>
+
+    <!-- Khởi chạy hệ thống điều hướng -->
+    <include file="$(find clean_robot)/launch/turtlebot3_navigation.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="map_file" value="$(arg map_file)"/>
+    </include>
+
+    <!-- Khởi chạy trình quy hoạch đường đi cho việc làm sạch -->
+    <node pkg="clean_robot" type="path_planning_node" respawn="false" name="path_planning_node" output="screen" clear_params="true">
+        <rosparam file="$(find clean_robot)/config/costmap_common_params.yaml" command="load" ns="cleaning_costmap" />
+        <rosparam file="$(find clean_robot)/config/cleaning_costmap_params.yaml" command="load" />
+    </node>
+
+    <!-- Gửi điểm mục tiêu đến hệ thống điều hướng dựa trên quỹ đạo làm sạch -->
+    <!-- Thiết lập khoảng cách để gửi điểm mục tiêu tiếp theo khi robot tiến đến điểm hiện tại -->
+    <param name="/NextGoal/tolerance_goal" value="0.25" />
+    <node pkg="clean_robot" type="next_goal" respawn="true" name="next_goal" output="screen" />
+</launch>

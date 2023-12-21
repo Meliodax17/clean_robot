@@ -1,0 +1,12 @@
+mkdir -p clean_robot_ws/src      # Tạo không gian làm việc và thư mục src
+cd clean_robot_ws/src            # Di chuyển đến thư mục src
+git clone https://github.com/mywisdomfly/Clean-robot-turtlebot3.git  # Sao chép mã nguồn từ GitHub
+
+cd ..                            # Di chuyển ra khỏi thư mục src
+catkin_make                      # Sử dụng catkin để xây dựng mã nguồn
+
+source devel/setup.bash          # Nguồn mã nguồn để sử dụng các biến môi trường
+
+export TURTLEBOT3_MODEL=burger   # Đặt mô hình TurtleBot3 thành burger
+
+roslaunch clean_robot clean_work.launch  # Khởi chạy launch file để bắt đầu công việc làm sạch
