@@ -1,9 +1,39 @@
+# Mo mot Terminal
+
+//De chay duoc mo phong truoc tien ta phai cai ubuntu va ROS (o day toi cai ubuntu 20.04 va ROS Noetic)
+//Mo phong robot lau nha su dung TURTLEBOT3_MODEL de su dung duoc TURTLEBOT3_MODEL truoc tien ta phai cai TurtleBot3
+Dưới đây là câu lệnh bạn có thể sử dụng để cài đặt các gói ROS cho TurtleBot3 trong phiên bản ROS Noetic:
+
+sudo apt install ros-noetic-turtlebot3 ros-noetic-navigation ros-noetic-dwa-local-planner ros-noetic-slam-karto
+
+
+//Tiep theo ta phai ca SLAM
+
+sudo apt-get install ros-noetic-slam-gmapping
+ 
+//Việc triển khai một thuật toán tránh vật cản trong ROS có thể tùy thuộc vào thuật toán cụ thể bạn muốn sử dụng. 
+Dưới đây, tôi sẽ hướng dẫn một số bước cơ bản để triển khai thuật toán di chuyển theo tránh vật cản bằng cách sử dụng gói move_base trong ROS, cùng với các cài đặt cơ bản:
+
+sudo apt-get install ros-noetic-move-base
+
+//De khoi tao moi truong lam viec ta can den catkin_make (catkin build)
+
+sudo apt-get install python3-catkin-tools
+
+
+roscore
+# Lệnh roscore được sử dụng để khởi động ROS (Robot Operating System) core, là trung tâm của hệ thống ROS, quản lý việc giao tiếp giữa các thành phần của robot. 
+Khi bạn chạy roscore, nó sẽ bắt đầu các nodes chính bao gồm ROS Master, Parameter Server và rosout.
+
+# Mo mot Terminal moi 
 mkdir -p clean_robot_ws/src      # Tạo không gian làm việc và thư mục src
 cd clean_robot_ws/src            # Di chuyển đến thư mục src
 git clone https://github.com/Meliodax17/Robot_clean.git  # Sao chép mã nguồn từ GitHub
 
 cd ..                            # Di chuyển ra khỏi thư mục src
 catkin_make                      # Sử dụng catkin để xây dựng mã nguồn
+
+
 
 source devel/setup.bash          # Nguồn mã nguồn để sử dụng các biến môi trường
 
